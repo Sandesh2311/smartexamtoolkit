@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExamForge Pro - AI-Powered Exam Generator</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#38bdf8',
+                        secondary: '#818cf8',
+                        dark: '#020617'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark text-gray-100 min-h-screen">
+    <custom-navbar>
+        <nav id="fallback-nav" aria-hidden="false" style="display:flex;gap:1rem;padding:0.75rem 1rem;background:rgba(2,6,23,0.95);color:#fff;border-bottom:1px solid rgba(255,255,255,0.04);">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html" class="bg-primary text-dark px-3 py-1 rounded">Sign Up</a>
+        </nav>
+    </custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="flex flex-col md:flex-row items-center justify-between gap-8 mb-16">
+            <div class="md:w-1/2">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Generate Exams <span class="text-primary">Effortlessly</span></h1>
+                <p class="text-lg text-gray-300 mb-6">AI-powered MCQ and question paper generator for educators. Save hours of manual work with ExamForge Pro.</p>
+                <div class="flex gap-4">
+                    <a href="register.html" class="bg-primary hover:bg-primary/90 text-dark px-6 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-primary/30">Get Started Free</a>
+                    <a href="#features" class="border border-primary text-primary px-6 py-3 rounded-lg font-medium transition-all hover:bg-primary/10">Learn More</a>
+                </div>
+            </div>
+            <div class="md:w-1/2">
+                <div class="glass-card p-2 rounded-xl">
+                    <img src="http://static.photos/technology/640x360/42" alt="Dashboard Preview" class="rounded-lg w-full h-auto">
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Powerful Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-xl hover:scale-[1.02] transition-transform">
+                    <div class="text-primary mb-4">
+                        <i data-feather="zap" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Instant MCQ Generation</h3>
+                    <p class="text-gray-300">Generate hundreds of MCQs in seconds with AI-powered question creation.</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl hover:scale-[1.02] transition-transform">
+                    <div class="text-primary mb-4">
+                        <i data-feather="edit" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Custom Paper Patterns</h3>
+                    <p class="text-gray-300">Create exam papers following your institution's specific format and requirements.</p>
+                </div>
+                <div class="glass-card p-6 rounded-xl hover:scale-[1.02] transition-transform">
+                    <div class="text-primary mb-4">
+                        <i data-feather="download" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">PDF Export</h3>
+                    <p class="text-gray-300">Download professionally formatted PDFs ready for printing or digital distribution.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Simple Pricing</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <div class="glass-card p-8 rounded-xl border border-gray-700 hover:border-primary/50 transition-colors">
+                    <h3 class="text-2xl font-semibold mb-2">Free</h3>
+                    <p class="text-gray-300 mb-6">Basic features to get started</p>
+                    <div class="flex items-baseline mb-6">
+                        <span class="text-4xl font-bold">₹0</span>
+                        <span class="text-gray-400">/forever</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
+                            <span>5 MCQs per day</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
+                            <span>Basic question types</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-feather="x" class="w-4 h-4 mr-2 text-gray-500"></i>
+                            <span class="text-gray-400">No PDF downloads</span>
+                        </li>
+                    </ul>
+                    <a href="register.html" class="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg font-medium transition-colors">Get Started</a>
+                </div>
+                <div class="glass-card p-8 rounded-xl border-2 border-primary/50 relative hover:shadow-lg hover:shadow-primary/20 transition-all">
+                    <div class="absolute top-0 right-0 bg-primary text-dark px-3 py-1 rounded-bl-lg rounded-tr-lg text-sm font-bold">Popular</div>
+                    <h3 class="text-2xl font-semibold mb-2">Premium</h3>
+                    <p class="text-gray-300 mb-6">Unlock all features</p>
+                    <div class="flex items-baseline mb-6">
+                        <span class="text-4xl font-bold">₹99</span>
+                        <span class="text-gray-400">/lifetime</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
+                            <span>Unlimited MCQs</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
+                            <span>Advanced question types</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
+                            <span>PDF downloads</span>
+                        </li>
+                    </ul>
+                    <button id="buy-premium" data-amount="99" class="block w-full text-center bg-primary hover:bg-primary/90 text-dark py-3 rounded-lg font-medium transition-colors">Upgrade Now</button>
+                    <div id="payment-status" class="text-sm text-gray-400 mt-2 text-center"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="glass-card p-8 rounded-xl text-center mb-16">
+            <h2 class="text-2xl font-bold mb-4">Ready to revolutionize your exam creation?</h2>
+            <p class="text-gray-300 mb-6 max-w-2xl mx-auto">Join thousands of educators who save hours every week with ExamForge Pro.</p>
+            <a href="register.html" class="inline-block bg-primary hover:bg-primary/90 text-dark px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-primary/30">Start Free Trial</a>
+        </section>
+    </main>
+
+    <custom-footer></custom-footer>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="/static/js/components/navbar.js"></script>
+    <script src="/static/js/components/footer.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script>feather.replace();</script>
+</body>
+</html>

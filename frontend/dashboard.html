@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ExamForge Pro</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#38bdf8',
+                        secondary: '#818cf8',
+                        dark: '#020617'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark text-gray-100 min-h-screen">
+    <custom-navbar>
+        <nav id="fallback-nav" aria-hidden="false" style="display:flex;gap:1rem;padding:0.75rem 1rem;background:rgba(2,6,23,0.95);color:#fff;border-bottom:1px solid rgba(255,255,255,0.04);">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html" class="bg-primary text-dark px-3 py-1 rounded">Sign Up</a>
+        </nav>
+    </custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+            <div>
+                <h1 class="text-2xl font-bold">Dashboard</h1>
+                <p class="text-gray-300">Welcome back, Educator!</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <a href="premium.html" class="inline-flex items-center bg-gradient-to-r from-primary to-secondary text-dark px-4 py-2 rounded-lg font-medium hover:shadow-lg hover:shadow-primary/30 transition-all">
+                    <i data-feather="star" class="w-4 h-4 mr-2"></i>
+                    Upgrade to Premium
+                </a>
+            </div>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="glass-card p-6 rounded-xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-300">MCQs Generated</p>
+                        <h3 class="text-2xl font-bold">1,248</h3>
+                    </div>
+                    <div class="text-primary p-3 rounded-full bg-primary/10">
+                        <i data-feather="file-text" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card p-6 rounded-xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-300">Papers Created</p>
+                        <h3 class="text-2xl font-bold">87</h3>
+                    </div>
+                    <div class="text-primary p-3 rounded-full bg-primary/10">
+                        <i data-feather="layers" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card p-6 rounded-xl">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-300">Time Saved</p>
+                        <h3 class="text-2xl font-bold">42h</h3>
+                    </div>
+                    <div class="text-primary p-3 rounded-full bg-primary/10">
+                        <i data-feather="clock" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tools Section -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4">Quick Tools</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <a href="mcq.html" class="glass-card p-6 rounded-xl hover:scale-[1.02] transition-transform group">
+                    <div class="flex items-start gap-4">
+                        <div class="text-primary p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                            <i data-feather="file-text" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-1">MCQ Generator</h3>
+                            <p class="text-gray-300">Generate multiple choice questions instantly</p>
+                        </div>
+                    </div>
+                </a>
+                <a href="paper.html" class="glass-card p-6 rounded-xl hover:scale-[1.02] transition-transform group">
+                    <div class="flex items-start gap-4">
+                        <div class="text-primary p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                            <i data-feather="layers" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-1">Paper Generator</h3>
+                            <p class="text-gray-300">Create complete exam papers with your pattern</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Recent Activity -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4">Recent Activity</h2>
+            <div class="glass-card p-6 rounded-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="text-left border-b border-gray-700">
+                                <th class="pb-3">Type</th>
+                                <th class="pb-3">Details</th>
+                                <th class="pb-3">Date</th>
+                                <th class="pb-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-700">
+                                <td class="py-3">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                                        MCQ Set
+                                    </span>
+                                </td>
+                                <td class="py-3">Physics - Thermodynamics (20 questions)</td>
+                                <td class="py-3 text-gray-300">2 hours ago</td>
+                                <td class="py-3">
+                                    <button class="text-primary hover:underline">View</button>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-700">
+                                <td class="py-3">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-secondary/10 text-secondary">
+                                        Exam Paper
+                                    </span>
+                                </td>
+                                <td class="py-3">Mathematics - Final Term (50 marks)</td>
+                                <td class="py-3 text-gray-300">Yesterday</td>
+                                <td class="py-3">
+                                    <button class="text-primary hover:underline">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="py-3">
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                                        MCQ Set
+                                    </span>
+                                </td>
+                                <td class="py-3">Chemistry - Organic (15 questions)</td>
+                                <td class="py-3 text-gray-300">3 days ago</td>
+                                <td class="py-3">
+                                    <button class="text-primary hover:underline">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+    
+    <script src="/static/js/components/navbar.js"></script>
+    <script src="/static/js/components/footer.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script>feather.replace();</script>
+</body>
+</html>
