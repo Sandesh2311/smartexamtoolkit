@@ -26,4 +26,9 @@ def create_app():
     from flask_cors import CORS
     CORS(app)
 
+    # Ensure tables exist on startup
+    from backend import models  # noqa: F401
+    with app.app_context():
+        db.create_all()
+
     return app

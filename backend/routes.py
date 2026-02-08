@@ -23,7 +23,7 @@ def register():
     db.session.add(user)
     db.session.commit()
 
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
     return jsonify({'message': 'registered', 'user_id': user.id, 'access_token': access_token})
 
 
@@ -35,7 +35,7 @@ def login():
     user = User.query.filter_by(email=email).first()
     if not user or not user.check_password(password):
         return jsonify({'error': 'invalid credentials'}), 401
-    access_token = create_access_token(identity=user.id)
+    access_token = create_access_token(identity=str(user.id))
     return jsonify({'message': 'ok', 'user_id': user.id, 'access_token': access_token})
 
 
@@ -43,6 +43,11 @@ def login():
 @jwt_required()
 def get_me():
     user_id = get_jwt_identity()
+    if user_id is not None:
+        try:
+            user_id = int(user_id)
+        except (TypeError, ValueError):
+            pass
     user = User.query.get(user_id)
     if not user:
         abort(404)
@@ -75,6 +80,11 @@ def create_order():
     try:
         order = create_razorpay_order(amount, currency)
         user_id = get_jwt_identity()
+        if user_id is not None:
+            try:
+                user_id = int(user_id)
+            except (TypeError, ValueError):
+                pass
         payment = Payment(order_id=order['id'], amount=order['amount'], currency=order['currency'], status='created', user_id=user_id)
         db.session.add(payment)
         db.session.commit()

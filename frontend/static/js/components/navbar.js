@@ -105,29 +105,29 @@ class CustomNavbar extends HTMLElement {
         
         // populate auth-aware links
         const navLinks = this.shadowRoot.querySelector('.nav-links');
-        const apiBase = window.API_BASE || '/api';
+        const isAuth = !!localStorage.getItem('accessToken');
 
-        const renderLinks = (isAuth) => {
+        const renderLinks = (authed) => {
             navLinks.innerHTML = `
-                <a href="/">Home</a>
-                <a href="#features">Features</a>
-                <a href="/dashboard">Dashboard</a>
-                ${isAuth ? `<button id="logout-btn" class="bg-transparent border border-primary text-primary px-4 py-2 rounded-lg">Logout</button>` : `<a href="/login">Login</a><a href="/register" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">Sign Up</a>`}
+                <a href="index.html">Home</a>
+                <a href="index.html#features">Features</a>
+                <a href="dashboard.html">Dashboard</a>
+                ${authed ? `<button id="logout-btn" class="bg-transparent border border-primary text-primary px-4 py-2 rounded-lg">Logout</button>` : `<a href="login.html">Login</a><a href="register.html" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">Sign Up</a>`}
             `;
 
-            if (isAuth) {
+            if (authed) {
                 const btn = this.shadowRoot.querySelector('#logout-btn');
                 btn.addEventListener('click', () => {
                     if (window.appLogout) window.appLogout();
-                    else window.location.href = '/logout';
+                    else {
+                        localStorage.removeItem('accessToken');
+                        window.location.href = 'index.html';
+                    }
                 });
             }
         };
 
-        fetch(`${apiBase}/session`, { credentials: 'same-origin' })
-            .then(res => res.ok ? res.json() : { authenticated: false })
-            .then(data => renderLinks(!!data.authenticated))
-            .catch(() => renderLinks(false));
+        renderLinks(isAuth);
         
         // Ensure feather icons render inside the component's shadow DOM
         if (window.feather && typeof feather.replace === 'function') {
@@ -150,7 +150,7 @@ class CustomNavbar extends HTMLElement {
         console.debug('Navbar links HTML:', shadowNavLinks ? shadowNavLinks.innerHTML : null);
         if (!shadowNavLinks || !shadowNavLinks.innerHTML.trim()) {
             // Ensure a visible login link as a last-resort fallback
-            this.innerHTML = '<nav id="fallback-nav"><a href="/">Home</a> <a href="/login">Login</a> <a href="/register">Sign Up</a></nav>';
+            this.innerHTML = '<nav id="fallback-nav"><a href="index.html">Home</a> <a href="login.html">Login</a> <a href="register.html">Sign Up</a></nav>';
             console.warn('Navbar failed to populate shadow links; applied light-DOM fallback.');
         }
     }

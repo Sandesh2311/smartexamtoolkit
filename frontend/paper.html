@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paper Generator - ExamForge Pro</title>
-    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <title>Paper Generator - SmartExamToolkit</title>
+    <link rel="icon" type="image/svg+xml" href="./static/favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="./static/css/style.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -118,74 +118,50 @@
 
     <custom-footer></custom-footer>
     
-    <script src="/static/js/components/navbar.js"></script>
-    <script src="/static/js/components/footer.js"></script>
-    <script src="/static/js/script.js"></script>
+    <script src="./static/js/components/navbar.js"></script>
+    <script src="./static/js/components/footer.js"></script>
+    <script src="./static/js/script.js"></script>
     <script>
-        // Sample paper generation logic
-        document.getElementById('generate-btn').addEventListener('click', function() {
+        function buildPaperPrompt({ subject, className, marks, duration, pattern }) {
+            return [
+                `Create a full exam paper.`,
+                `Class/Grade: ${className}`,
+                `Subject: ${subject}`,
+                `Total Marks: ${marks}`,
+                `Duration: ${duration}`,
+                `Pattern:\n${pattern}`,
+                `Return in plain text with clear section headings and numbered questions.`,
+                `If MCQs are requested, include options A-D and mark the correct answer like "Answer: C".`
+            ].join('\n');
+        }
+
+        document.getElementById('generate-btn').addEventListener('click', async function() {
             const subject = document.getElementById('subject').value || 'Mathematics';
             const className = document.getElementById('class').value || '10th';
-            const marks = document.getElementById('marks').value;
+            const marks = document.getElementById('marks').value || '50';
             const duration = document.getElementById('duration').value || '2 hours';
             const pattern = document.getElementById('pattern').value || 'Section A: 5 MCQs (1 mark each)\nSection B: 5 short answer (2 marks each)\nSection C: 2 long answer (5 marks each)';
-            
-            // Generate sample paper
-            const paper = `
-                <div class="border-b border-gray-700 pb-6 mb-6">
-                    <div class="text-center mb-6">
-                        <h3 class="text-xl font-bold">${className} ${subject} Examination</h3>
-                        <p class="text-gray-300">Total Marks: ${marks} | Duration: ${duration}</p>
-                    </div>
-                    
-                    <div class="mb-6">
-                        <h4 class="font-semibold mb-2">General Instructions:</h4>
-                        <ol class="list-decimal list-inside space-y-1">
-                            <li>All questions are compulsory</li>
-                            <li>Read the questions carefully before answering</li>
-                            <li>Marks are indicated against each question</li>
-                        </ol>
-                    </div>
-                    
-                    ${pattern.split('\n').map(section => {
-                        const match = section.match(/\d+/);
-                        const qCount = match ? parseInt(match[0], 10) : 1;
-                        return `
-                        <div class="mb-6">
-                            <h4 class="font-semibold mb-2">${section}</h4>
-                            ${section.includes('MCQ') ? `
-                                <div class="ml-4 space-y-4">
-                                    ${Array.from({length: qCount}, (_, i) => `
-                                        <div>
-                                            <p class="mb-2">${i+1}. Sample MCQ question?</p>
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 ml-4">
-                                                <div>A) Option 1</div>
-                                                <div>B) Option 2</div>
-                                                <div>C) Option 3</div>
-                                                <div>D) Option 4</div>
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            ` : `
-                                <div class="ml-4 space-y-4">
-                                    ${Array.from({length: qCount}, (_, i) => `
-                                        <div>
-                                            <p>${i+1}. Sample ${section.includes('short') ? 'short' : 'long'} answer question?</p>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            `}
-                        </div>
-                    `}).join('')}
-                </div>
-            `;
-            
-            document.getElementById('preview-content').innerHTML = paper;
-            document.getElementById('download-btn').disabled = false;
-            feather.replace();
+
+            const preview = document.getElementById('preview-content');
+            const btn = document.getElementById('generate-btn');
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+            preview.innerHTML = '<p class="text-gray-400">Generating exam paper...</p>';
+
+            try {
+                const prompt = buildPaperPrompt({ subject, className, marks, duration, pattern });
+                const text = await generateAI(prompt);
+                preview.innerHTML = `<pre class="whitespace-pre-wrap text-gray-100">${text}</pre>`;
+                document.getElementById('download-btn').disabled = false;
+            } catch (e) {
+                preview.innerHTML = `<p class="text-red-400">Error generating paper: ${e.message || e}</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i data-feather="zap" class="w-4 h-4 mr-2"></i>Generate';
+                feather.replace();
+            }
         });
-        
+
         document.getElementById('download-btn').addEventListener('click', function() {
             alert('Please upgrade to Premium to download PDFs');
         });

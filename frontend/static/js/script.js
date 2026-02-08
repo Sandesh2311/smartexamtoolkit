@@ -58,47 +58,20 @@ function validateForm(form) {
     return true;
 }
 
-// --- AI + Razorpay integrations ---
+// --- OpenAI + Razorpay integrations ---
 
-const API_BASE = window.API_BASE || '/api';
-
-let sessionCache = { loaded: false, authenticated: false, email: null, is_premium: false };
-
-async function fetchSession() {
-    try {
-        const res = await fetch(`${API_BASE}/session`, { credentials: 'same-origin' });
-        if (res.ok) {
-            const data = await res.json();
-            sessionCache = { ...sessionCache, ...data, loaded: true, authenticated: !!data.authenticated };
-            return sessionCache;
-        }
-    } catch (err) {
-        console.error('session fetch failed', err);
-    }
-    sessionCache = { ...sessionCache, loaded: true, authenticated: false };
-    return sessionCache;
-}
-
-function isAuthenticated() {
-    return !!sessionCache.authenticated;
-}
-
-async function ensureSessionLoaded() {
-    if (!sessionCache.loaded) await fetchSession();
-    return sessionCache;
-}
+const API_BASE = window.API_BASE || 'http://127.0.0.1:5000/api';
 
 async function generateAI(prompt) {
     try {
         const res = await fetch(`${API_BASE}/openai/generate`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            credentials: 'same-origin',
             body: JSON.stringify({prompt})
         });
         const data = await res.json();
         if (res.ok) return data.result;
-        throw new Error(data.error || 'AI error');
+        throw new Error(data.error || 'OpenAI error');
     } catch (err) {
         console.error(err);
         throw err;
@@ -106,16 +79,23 @@ async function generateAI(prompt) {
 }
 
 async function getRazorpayKey() {
-    const res = await fetch(`${API_BASE}/config`, { credentials: 'same-origin' });
+    const res = await fetch(`${API_BASE}/config`);
     const data = await res.json();
     return data.razorpay_key_id;
 }
 
+async function getAuthHeaders() {
+    const headers = {'Content-Type': 'application/json'};
+    const token = localStorage.getItem('accessToken');
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    return headers;
+}
+
 async function createOrder(amount) {
+    const headers = await getAuthHeaders();
     const res = await fetch(`${API_BASE}/payments/create`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'same-origin',
+        headers,
         body: JSON.stringify({amount})
     });
     const data = await res.json();
@@ -129,10 +109,10 @@ async function createOrder(amount) {
 }
 
 async function verifyPayment(details) {
+    const headers = await getAuthHeaders();
     const res = await fetch(`${API_BASE}/payments/verify`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'same-origin',
+        headers,
         body: JSON.stringify(details)
     });
     const data = await res.json();
@@ -146,19 +126,19 @@ async function verifyPayment(details) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    ensureSessionLoaded();
-
     const genBtn = document.getElementById('ai-generate');
     const clearBtn = document.getElementById('ai-clear');
     const promptEl = document.getElementById('ai-prompt');
     const resultEl = document.getElementById('ai-result');
 
-    async function logout() {
-        try {
-            await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
-        } finally {
-            window.location.href = '/';
-        }
+    function isAuthenticated() {
+        return !!localStorage.getItem('accessToken');
+    }
+
+    function logout() {
+        localStorage.removeItem('accessToken');
+        // Ensure UI updates (navbar reads localStorage on connect)
+        window.location.href = 'index.html';
     }
 
     // Login form handler
@@ -173,12 +153,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const res = await fetch(`${API_BASE}/login`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    credentials: 'same-origin',
                     body: JSON.stringify({email, password})
                 });
                 const data = await res.json();
                 if (!res.ok) { alert(data.error || 'Login failed'); return; }
-                window.location.href = '/dashboard';
+                localStorage.setItem('accessToken', data.access_token);
+                // reload to update navbar and state
+                window.location.href = 'dashboard.html';
             } catch (e) {
                 console.error(e);
                 alert('Login error');
@@ -198,12 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const res = await fetch(`${API_BASE}/register`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    credentials: 'same-origin',
                     body: JSON.stringify({email, password})
                 });
                 const data = await res.json();
                 if (!res.ok) { alert(data.error || 'Registration failed'); return; }
-                window.location.href = '/dashboard';
+                localStorage.setItem('accessToken', data.access_token);
+                window.location.href = 'dashboard.html';
             } catch (e) {
                 console.error(e);
                 alert('Registration error');
@@ -242,56 +223,57 @@ document.addEventListener('DOMContentLoaded', () => {
     // Payment actions
     const buyBtn = document.getElementById('buy-premium');
     if (buyBtn) {
-        ensureSessionLoaded().then((state) => {
-            if (!state.authenticated) {
-                buyBtn.classList.add('opacity-60', 'cursor-not-allowed');
-                buyBtn.title = 'Please login to purchase';
-            }
-        });
+        // Visually indicate that login is required when not authorized
+        if (!isAuthenticated()) {
+            buyBtn.classList.add('opacity-60', 'cursor-not-allowed');
+            buyBtn.title = 'Please login to purchase';
+        }
 
         buyBtn.addEventListener('click', async () => {
-            await ensureSessionLoaded();
+            console.log('Buy button clicked');
             if (!isAuthenticated()) {
                 if (confirm('You must be logged in to purchase. Go to login page?')) {
-                    window.location.href = '/login';
+                    window.location.href = 'login.html';
                 }
-                return;
-            }
-            if (sessionCache.is_premium) {
-                alert('You already have premium access.');
                 return;
             }
             const amount = Number(buyBtn.dataset.amount) || 99;
             try {
                 const statusEl = document.getElementById('payment-status');
                 if (statusEl) statusEl.textContent = 'Initiating payment...';
+                console.log('Fetching razorpay key...');
                 const key = await getRazorpayKey();
                 if (!key) {
+                    console.error('Razorpay key not configured on server');
                     if (statusEl) statusEl.textContent = 'Payment unavailable: server not configured';
                     alert('Payment not available: Razorpay public key not configured on the server.');
                     return;
                 }
 
+                console.log('Creating order on server...');
                 if (statusEl) statusEl.textContent = 'Creating order...';
                 let order;
                 try {
                     order = await createOrder(amount);
                 } catch (err) {
+                    console.error('Order creation failed', err);
                     if (statusEl) statusEl.textContent = 'Order creation failed';
+                    // If unauthorized (401), prompt to login
                     if (err.status === 401 || (err.message && err.message.toLowerCase().includes('authorization'))) {
-                        if (confirm('You must be logged in to purchase. Go to login page?')) window.location.href = '/login';
+                        if (confirm('You must be logged in to purchase. Go to login page?')) window.location.href = 'login.html';
                         return;
                     }
                     alert('Could not create order: ' + (err.message || err));
                     return;
                 }
 
+                console.log('Opening Razorpay checkout for order', order.id);
                 if (statusEl) statusEl.textContent = 'Opening checkout...';
                 const options = {
                     key,
                     amount: order.amount,
                     currency: order.currency,
-                    name: 'ExamForge Pro',
+                    name: 'SmartExamToolkit',
                     description: 'Premium Upgrade',
                     order_id: order.id,
                     handler: async function (response) {
@@ -299,8 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             const verify = await verifyPayment(response);
                             if (verify.status === 'ok') {
                                 alert('Payment successful! Thank you.');
-                                sessionCache.is_premium = true;
-                                window.location.reload();
                             } else {
                                 alert('Payment verification failed.');
                             }
@@ -328,282 +308,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // Expose logout for nav component or other parts
     window.appLogout = logout;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        

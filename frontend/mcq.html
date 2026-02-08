@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCQ Generator - ExamForge Pro</title>
-    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <title>MCQ Generator - SmartExamToolkit</title>
+    <link rel="icon" type="image/svg+xml" href="./static/favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="./static/css/style.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -127,53 +127,49 @@
 
     <custom-footer></custom-footer>
     
-    <script src="/static/js/components/navbar.js"></script>
-    <script src="/static/js/components/footer.js"></script>
-    <script src="/static/js/script.js"></script>
+    <script src="./static/js/components/navbar.js"></script>
+    <script src="./static/js/components/footer.js"></script>
+    <script src="./static/js/script.js"></script>
     <script>
-        // Sample MCQ generation logic
-        document.getElementById('generate-btn').addEventListener('click', function() {
+        function buildMcqPrompt({ subject, topic, difficulty, count, language }) {
+            return [
+                `Generate ${count} multiple-choice questions.`,
+                `Subject: ${subject}`,
+                `Topic: ${topic}`,
+                `Difficulty: ${difficulty}`,
+                `Language: ${language}`,
+                `Return in plain text with numbered questions and options A-D.`,
+                `Include the correct answer at the end of each question like "Answer: B".`
+            ].join('\n');
+        }
+
+        document.getElementById('generate-btn').addEventListener('click', async function() {
             const subject = document.getElementById('subject').value || 'Physics';
             const topic = document.getElementById('topic').value || 'Thermodynamics';
-            const difficulty = document.getElementById('difficulty').value;
-            const count = parseInt(document.getElementById('count').value, 10) || 1;
-            
-            // Generate sample MCQs
-            let mcqs = '';
-            for (let i = 1; i <= count; i++) {
-                mcqs += `
-                    <div class="border-b border-gray-700 pb-4 mb-4">
-                        <div class="flex items-start mb-2">
-                            <span class="font-medium mr-2">${i}.</span>
-                            <p>Sample question about ${topic} in ${subject} (${difficulty} difficulty)?</p>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 ml-6">
-                            <div class="flex items-center">
-                                <span class="mr-2">A)</span>
-                                <p>Option 1</p>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="mr-2">B)</span>
-                                <p>Option 2</p>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="mr-2">C)</span>
-                                <p>Option 3</p>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="mr-2">D)</span>
-                                <p>Option 4</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            const difficulty = document.getElementById('difficulty').value || 'medium';
+            const count = parseInt(document.getElementById('count').value, 10) || 10;
+            const language = document.getElementById('language').value || 'english';
+
+            const preview = document.getElementById('preview-content');
+            const btn = document.getElementById('generate-btn');
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+            preview.innerHTML = '<p class="text-gray-400">Generating MCQs...</p>';
+
+            try {
+                const prompt = buildMcqPrompt({ subject, topic, difficulty, count, language });
+                const text = await generateAI(prompt);
+                preview.innerHTML = `<pre class="whitespace-pre-wrap text-gray-100">${text}</pre>`;
+                document.getElementById('download-btn').disabled = false;
+            } catch (e) {
+                preview.innerHTML = `<p class="text-red-400">Error generating MCQs: ${e.message || e}</p>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i data-feather="zap" class="w-4 h-4 mr-2"></i>Generate';
+                feather.replace();
             }
-            
-            document.getElementById('preview-content').innerHTML = mcqs;
-            document.getElementById('download-btn').disabled = false;
-            feather.replace();
         });
-        
+
         document.getElementById('download-btn').addEventListener('click', function() {
             alert('Please upgrade to Premium to download PDFs');
         });
