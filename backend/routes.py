@@ -8,6 +8,16 @@ import json
 
 bp = Blueprint('api', __name__)
 
+def _current_user():
+    user_id = get_jwt_identity()
+    if user_id is not None:
+        try:
+            user_id = int(user_id)
+        except (TypeError, ValueError):
+            pass
+    if user_id is None:
+        return None
+    return User.query.get(user_id)
 
 @bp.route('/register', methods=['POST'])
 def register():
@@ -145,6 +155,20 @@ def razorpay_webhook():
         return jsonify({'status': 'error'}), 500
 
 
+
+@bp.route('/downloads/consume', methods=['POST'])
+@jwt_required()
+def consume_download():
+    user = _current_user()
+    if not user:
+        abort(404)
+    if user.is_premium:
+        return jsonify({'allowed': True, 'remaining': None, 'is_premium': True})
+    if (user.free_pdf_used or 0) >= 1:
+        return jsonify({'allowed': False, 'remaining': 0, 'is_premium': False, 'error': 'free limit reached'}), 403
+    user.free_pdf_used = (user.free_pdf_used or 0) + 1
+    db.session.commit()
+    return jsonify({'allowed': True, 'remaining': 0, 'is_premium': False})
 @bp.route('/config', methods=['GET'])
 def get_config():
     # Return only the public Razorpay key id for client-side checkout

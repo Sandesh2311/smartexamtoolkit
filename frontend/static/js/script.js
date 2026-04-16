@@ -60,7 +60,10 @@ function validateForm(form) {
 
 // --- OpenAI + Razorpay integrations ---
 
-const API_BASE = window.API_BASE || 'http://127.0.0.1:5000/api';
+const API_BASE = window.API_BASE
+    || ((location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+        ? 'http://127.0.0.1:5000/api'
+        : '/api');
 
 async function generateAI(prompt) {
     try {
@@ -308,3 +311,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Expose logout for nav component or other parts
     window.appLogout = logout;
 });
+async function consumePdfAllowance() {
+    const headers = await getAuthHeaders();
+    if (!headers["Authorization"]) {
+        const err = new Error("Login required");
+        err.status = 401;
+        throw err;
+    }
+    const res = await fetch(`${API_BASE}/downloads/consume`, {
+        method: "POST",
+        headers
+    });
+    let data = {};
+    try { data = await res.json(); } catch (_) {}
+    if (res.ok) return data;
+    const err = new Error(data.error || data.msg || "Free PDF limit reached");
+    err.status = res.status;
+    throw err;
+}
+

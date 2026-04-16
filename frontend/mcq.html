@@ -140,7 +140,7 @@
                 `Language: ${language}`,
                 `Return in plain text with numbered questions and options A-D.`,
                 `Include the correct answer at the end of each question like "Answer: B".`
-            ].join('\n');
+            ].join('\\n');
         }
 
         document.getElementById('generate-btn').addEventListener('click', async function() {
@@ -170,8 +170,30 @@
             }
         });
 
-        document.getElementById('download-btn').addEventListener('click', function() {
-            alert('Please upgrade to Premium to download PDFs');
+        document.getElementById('download-btn').addEventListener('click', async function() {
+            const btn = this;
+            btn.disabled = true;
+            const original = btn.innerHTML;
+            btn.textContent = 'Checking...';
+            try {
+                const data = await consumePdfAllowance();
+                if (!data.is_premium && data.remaining === 0) {
+                    btn.disabled = true;
+                    btn.textContent = 'Free limit used';
+                } else {
+                    btn.innerHTML = original;
+                }
+                alert('PDF download will be available here.');
+            } catch (e) {
+                if (e.status === 401) {
+                    if (confirm('You must be logged in to download. Go to login page?')) window.location.href = 'login.html';
+                } else {
+                    alert(e.message || 'Free PDF limit reached. Please upgrade to Premium.');
+                }
+                btn.disabled = false;
+                btn.innerHTML = original;
+                feather.replace();
+            }
         });
     </script>
     <script>feather.replace();</script>

@@ -90,7 +90,7 @@ class CustomNavbar extends HTMLElement {
             <nav>
                 <a href="index.html" class="logo">
                     <i data-feather="zap"></i>
-                    Exam<span>Forge</span>
+                    SmartExam<span>Toolkit</span>
                 </a>
                 
                 <button class="mobile-menu-btn">

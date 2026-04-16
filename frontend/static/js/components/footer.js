@@ -145,7 +145,7 @@ class CustomFooter extends HTMLElement {
             </div>
             
             <div class="copyright">
-                &copy; ${new Date().getFullYear()} ExamForge. All rights reserved.
+                &copy; ${new Date().getFullYear()} SmartExamToolkit. All rights reserved.
             </div>
         `;
         

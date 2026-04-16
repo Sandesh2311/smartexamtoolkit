@@ -129,10 +129,11 @@
                 `Subject: ${subject}`,
                 `Total Marks: ${marks}`,
                 `Duration: ${duration}`,
-                `Pattern:\n${pattern}`,
+                `Pattern:
+${pattern}`,
                 `Return in plain text with clear section headings and numbered questions.`,
                 `If MCQs are requested, include options A-D and mark the correct answer like "Answer: C".`
-            ].join('\n');
+            ].join('\\n');
         }
 
         document.getElementById('generate-btn').addEventListener('click', async function() {
@@ -140,7 +141,7 @@
             const className = document.getElementById('class').value || '10th';
             const marks = document.getElementById('marks').value || '50';
             const duration = document.getElementById('duration').value || '2 hours';
-            const pattern = document.getElementById('pattern').value || 'Section A: 5 MCQs (1 mark each)\nSection B: 5 short answer (2 marks each)\nSection C: 2 long answer (5 marks each)';
+            const pattern = document.getElementById('pattern').value || 'Section A: 5 MCQs (1 mark each)\\nSection B: 5 short answer (2 marks each)\\nSection C: 2 long answer (5 marks each)';
 
             const preview = document.getElementById('preview-content');
             const btn = document.getElementById('generate-btn');
@@ -162,8 +163,30 @@
             }
         });
 
-        document.getElementById('download-btn').addEventListener('click', function() {
-            alert('Please upgrade to Premium to download PDFs');
+        document.getElementById('download-btn').addEventListener('click', async function() {
+            const btn = this;
+            btn.disabled = true;
+            const original = btn.innerHTML;
+            btn.textContent = 'Checking...';
+            try {
+                const data = await consumePdfAllowance();
+                if (!data.is_premium && data.remaining === 0) {
+                    btn.disabled = true;
+                    btn.textContent = 'Free limit used';
+                } else {
+                    btn.innerHTML = original;
+                }
+                alert('PDF download will be available here.');
+            } catch (e) {
+                if (e.status === 401) {
+                    if (confirm('You must be logged in to download. Go to login page?')) window.location.href = 'login.html';
+                } else {
+                    alert(e.message || 'Free PDF limit reached. Please upgrade to Premium.');
+                }
+                btn.disabled = false;
+                btn.innerHTML = original;
+                feather.replace();
+            }
         });
     </script>
     <script>feather.replace();</script>

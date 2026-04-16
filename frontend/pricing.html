@@ -8,20 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <link rel="stylesheet" href="./static/css/style.css">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#38bdf8',
-                        secondary: '#818cf8',
-                        dark: '#020617'
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body class="bg-dark text-gray-100 min-h-screen">
     <custom-navbar>
@@ -32,11 +18,54 @@
         </nav>
     </custom-navbar>
     <main class="container mx-auto px-4 py-20">
-        <div class="glass-card p-8 rounded-xl text-center">
-            <h1 class="text-3xl font-bold mb-4">Pricing</h1>
-            <p class="text-gray-300 mb-6">Explore our plans and choose the best fit for your institution.</p>
-            <a href="register.html" class="bg-primary text-dark px-6 py-2 rounded-lg">Get Started</a>
-        </div>
+        <section class="glass-card p-8 rounded-xl mb-10">
+            <h1 class="text-3xl font-bold mb-3 text-center">Simple, Transparent Pricing</h1>
+            <p class="text-gray-300 text-center max-w-2xl mx-auto">
+                Start free and upgrade anytime. Designed for teachers, tutors, and institutes.
+            </p>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="glass-card p-8 rounded-xl border border-gray-800">
+                <h2 class="text-2xl font-semibold mb-2">Free</h2>
+                <p class="text-gray-300 mb-6">For individual educators getting started</p>
+                <div class="flex items-baseline mb-6">
+                    <span class="text-4xl font-bold">?0</span>
+                    <span class="text-gray-400">/forever</span>
+                </div>
+                <ul class="text-gray-300 space-y-3 mb-8">
+                    <li>5 MCQs per day</li>
+                    <li>Basic question formats</li>
+                    <li>Email support</li>
+                </ul>
+                <a href="register.html" class="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg font-medium">Get Started</a>
+            </div>
+
+            <div class="glass-card p-8 rounded-xl border-2 border-primary/60 relative">
+                <div class="absolute top-0 right-0 bg-primary text-dark px-3 py-1 rounded-bl-lg rounded-tr-lg text-sm font-bold">Popular</div>
+                <h2 class="text-2xl font-semibold mb-2">Premium</h2>
+                <p class="text-gray-300 mb-6">For serious exam creators and institutes</p>
+                <div class="flex items-baseline mb-6">
+                    <span class="text-4xl font-bold">?99</span>
+                    <span class="text-gray-400">/lifetime</span>
+                </div>
+                <ul class="text-gray-300 space-y-3 mb-8">
+                    <li>Unlimited MCQs and papers</li>
+                    <li>Advanced question patterns</li>
+                    <li>PDF export</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="premium.html" class="block w-full text-center bg-primary hover:bg-primary/90 text-dark py-3 rounded-lg font-medium">Upgrade Now</a>
+            </div>
+        </section>
+
+        <section class="glass-card p-8 rounded-xl mt-10 max-w-4xl mx-auto">
+            <h2 class="text-2xl font-semibold mb-3">Need a custom plan?</h2>
+            <p class="text-gray-300 mb-4">
+                If you are a school or coaching institute with bulk needs, contact us for tailored pricing.
+            </p>
+            <a class="text-primary" href="mailto:smartexamtoolkit@gmail.com">smartexamtoolkit@gmail.com</a>
+        </section>
     </main>
     <custom-footer></custom-footer>
     <script src="./static/js/components/navbar.js"></script>
