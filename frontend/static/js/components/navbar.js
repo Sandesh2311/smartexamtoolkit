@@ -27,11 +27,17 @@ class CustomNavbar extends HTMLElement {
                 .logo {
                     display: flex;
                     align-items: center;
-                    gap: 0.5rem;
+                    gap: 0.75rem;
                     font-weight: 700;
                     font-size: 1.25rem;
                     color: white;
                     text-decoration: none;
+                }
+
+                .logo img {
+                    height: 40px;
+                    width: auto;
+                    border-radius: 0.75rem;
                 }
                 
                 .logo span {
@@ -43,7 +49,7 @@ class CustomNavbar extends HTMLElement {
                     gap: 1.5rem;
                     align-items: center;
                 }
-                
+
                 .nav-links a {
                     color: rgba(255, 255, 255, 0.8);
                     text-decoration: none;
@@ -84,13 +90,17 @@ class CustomNavbar extends HTMLElement {
                     .nav-links.active {
                         display: flex;
                     }
+
+                    .logo img {
+                        height: 32px;
+                    }
                 }
             </style>
             
             <nav>
                 <a href="index.html" class="logo">
-                    <i data-feather="zap"></i>
-                    SmartExam<span>Toolkit</span>
+                    <img src="./img/logo.png" alt="SmartExamToolkit logo">
+                    <span>SmartExamToolkit</span>
                 </a>
                 
                 <button class="mobile-menu-btn">

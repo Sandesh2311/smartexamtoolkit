@@ -89,6 +89,22 @@ class CustomFooter extends HTMLElement {
                     color: rgba(255, 255, 255, 0.5);
                     font-size: 0.875rem;
                 }
+
+                .powered-by {
+                    text-align: center;
+                    margin-top: 0.5rem;
+                }
+
+                .powered-by a {
+                    color: rgba(255, 255, 255, 0.72);
+                    text-decoration: none;
+                    transition: color 0.2s ease;
+                }
+
+                .powered-by a:hover {
+                    color: #38bdf8;
+                    text-decoration: underline;
+                }
                 
                 @media (max-width: 768px) {
                     .footer-container {
@@ -146,6 +162,9 @@ class CustomFooter extends HTMLElement {
             
             <div class="copyright">
                 &copy; ${new Date().getFullYear()} SmartExamToolkit. All rights reserved.
+            </div>
+            <div class="powered-by">
+                <a href="https://ash-x-labs.vercel.app/" target="_blank" rel="noopener noreferrer">Powered by AshX Labs</a>
             </div>
         `;
         

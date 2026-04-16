@@ -3,159 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartExamToolkit - AI-Powered Exam Generator</title>
+    <title>SmartExamToolkit by AshX Labs</title>
+    <meta name="description" content="AI-powered exam preparation platform to generate notes, PDFs, and boost your study performance.">
+    <meta name="keywords" content="AI exam tool, online exam generator, notes generator, PDF generation, SmartExamToolkit">
+    <meta name="author" content="AshX Labs">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://smartexamtoolkit.in/">
     <link rel="icon" type="image/svg+xml" href="./static/favicon.svg">
+    <meta property="og:title" content="SmartExamToolkit by AshX Labs" />
+    <meta property="og:description" content="AI-powered exam preparation platform to generate notes, PDFs, and boost your study performance." />
+    <meta property="og:image" content="https://smartexamtoolkit.in/img/logo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://smartexamtoolkit.in/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SmartExamToolkit by AshX Labs" />
+    <meta name="twitter:description" content="AI-powered exam preparation platform to generate notes, PDFs, and boost your study performance." />
+    <meta name="twitter:image" content="https://smartexamtoolkit.in/img/logo.png" />
+    <link rel="stylesheet" href="./static/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="stylesheet" href="./static/css/style.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        primary: '#38bdf8',
-                        secondary: '#818cf8',
+                        primary: '#8b5cf6',
+                        secondary: '#60a5fa',
                         dark: '#020617'
                     }
                 }
             }
         }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "SmartExamToolkit by AshX Labs",
+      "description": "AI-powered exam preparation platform to generate notes, PDFs, and boost your study performance.",
+      "url": "https://smartexamtoolkit.in/"
+    }
+    </script>
 </head>
 <body class="bg-dark text-gray-100 min-h-screen">
+    
     <custom-navbar>
-        <nav id="fallback-nav" aria-hidden="false" style="display:flex;gap:1rem;padding:0.75rem 1rem;background:rgba(2,6,23,0.95);color:#fff;border-bottom:1px solid rgba(255,255,255,0.04);">
-            <a href="index.html">Home</a>
-            <a href="login.html">Login</a>
-            <a href="register.html" class="bg-primary text-dark px-3 py-1 rounded">Sign Up</a>
+        <nav id="fallback-nav" aria-hidden="false" class="fallback-nav">
+            <a href="index.html" class="nav-logo">SmartExamToolkit</a>
+            <div class="fallback-links">
+                <a href="index.html">Home</a>
+                <a href="login.html">Login</a>
+                <a href="register.html" class="cta-link">Sign Up</a>
+            </div>
         </nav>
     </custom-navbar>
     
-    <main class="container mx-auto px-4 py-8">
-        <!-- Hero Section -->
-        <section class="flex flex-col md:flex-row items-center justify-between gap-8 mb-16">
-            <div class="md:w-1/2">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Generate Exams <span class="text-primary">Effortlessly</span></h1>
-                <p class="text-lg text-gray-300 mb-6">AI-powered MCQ and question paper generator for educators. Save hours of manual work with SmartExamToolkit.</p>
-                <div class="flex gap-4">
-                    <a href="register.html" class="bg-primary hover:bg-primary/90 text-dark px-6 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-primary/30">Get Started Free</a>
-                    <a href="#features" class="border border-primary text-primary px-6 py-3 rounded-lg font-medium transition-all hover:bg-primary/10">Learn More</a>
+    <main class="site-shell container mx-auto px-4 py-10">
+        <section class="hero-section mb-16">
+            <div class="hero-copy">
+                <h1>AI-powered exam preparation platform</h1>
+                <p class="hero-description">Build smarter study material, generate polished exam papers, and unlock premium classroom workflows with one elegant AI tool.</p>
+                <div class="hero-actions">
+                    <a href="register.html" class="cta-link btn-primary">Get Started</a>
+                    <a href="#features" class="secondary-link">See Features</a>
                 </div>
             </div>
-            <div class="md:w-1/2">
-                <div class="glass-card p-2 rounded-xl">
-                    <img src="http://static.photos/technology/640x360/42" alt="Dashboard Preview" class="rounded-lg w-full h-auto">
+            <div class="hero-visual">
+                <div class="glass-card hero-card p-6 rounded-[2rem] border border-white/10">
+                    <div class="hero-badge">Premium AI Exam Toolkit</div>
+                    <img src="http://static.photos/technology/640x360/42" alt="Dashboard Preview" class="rounded-[1.5rem] w-full h-auto shadow-[0_30px_80px_rgba(139,92,246,0.22)]">
                 </div>
             </div>
         </section>
 
-        <!-- Features Section -->
         <section id="features" class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-12">Powerful Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-xl hover:scale-[1.02] transition-transform">
-                    <div class="text-primary mb-4">
-                        <i data-feather="zap" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Instant MCQ Generation</h3>
-                    <p class="text-gray-300">Generate hundreds of MCQs in seconds with AI-powered question creation.</p>
-                </div>
-                <div class="glass-card p-6 rounded-xl hover:scale-[1.02] transition-transform">
-                    <div class="text-primary mb-4">
-                        <i data-feather="edit" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Custom Paper Patterns</h3>
-                    <p class="text-gray-300">Create exam papers following your institution's specific format and requirements.</p>
-                </div>
-                <div class="glass-card p-6 rounded-xl hover:scale-[1.02] transition-transform">
-                    <div class="text-primary mb-4">
-                        <i data-feather="download" class="w-8 h-8"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">PDF Export</h3>
-                    <p class="text-gray-300">Download professionally formatted PDFs ready for printing or digital distribution.</p>
-                </div>
+            <div class="section-heading">
+                <span class="section-tag">Core advantages</span>
+                <h2>Designed for modern educators and exam creators.</h2>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card glass-card p-6 rounded-[1.75rem] hover:-translate-y-1 transition-transform duration-300">
+                    <div class="feature-icon">⚡</div>
+                    <h3>AI Notes Generator</h3>
+                    <p>Turn curriculum topics into polished notes, summaries, and knowledge checks instantly.</p>
+                </article>
+                <article class="feature-card glass-card p-6 rounded-[1.75rem] hover:-translate-y-1 transition-transform duration-300">
+                    <div class="feature-icon">📄</div>
+                    <h3>PDF Generator</h3>
+                    <p>Export clean, print-ready exam papers and study sheets with intelligent formatting.</p>
+                </article>
+                <article class="feature-card glass-card p-6 rounded-[1.75rem] hover:-translate-y-1 transition-transform duration-300">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Premium Access</h3>
+                    <p>Unlock advanced prompts, unlimited downloads, and priority AI processing.</p>
+                </article>
             </div>
         </section>
 
-        <!-- AI Generator Section -->
-        <section id="ai-generator" class="mb-16 glass-card p-6 rounded-xl">
-            <h2 class="text-3xl font-bold text-center mb-6">AI Exam Assistant</h2>
-            <div class="max-w-3xl mx-auto">
-                <label class="block mb-2 font-medium">Enter a prompt to generate MCQs or a short question paper:</label>
-                <textarea id="ai-prompt" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-700 text-gray-100" rows="4" placeholder="Write 10 MCQ questions on Newton's laws..."></textarea>
-                <div class="flex gap-3 mt-3">
-                    <button id="ai-generate" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-medium">Generate</button>
-                    <button id="ai-clear" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium">Clear</button>
+        <section id="ai-generator" class="mb-16 glass-card p-8 rounded-[2rem] hero-panel">
+            <h2>AI Exam Assistant</h2>
+            <p class="section-subtitle">Enter a prompt to generate MCQs or a short question paper.</p>
+            <div class="max-w-3xl mx-auto mt-6">
+                <label class="block mb-3 font-medium">Prompt</label>
+                <textarea id="ai-prompt" class="w-full p-4 rounded-[1.5rem] bg-[#0b1227] border border-white/10 text-gray-100" rows="4" placeholder="Write 10 MCQ questions on Newton's laws..."></textarea>
+                <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                    <button id="ai-generate" class="btn-primary w-full sm:w-auto">Generate</button>
+                    <button id="ai-clear" class="btn-secondary w-full sm:w-auto">Clear</button>
                 </div>
-                <div id="ai-result" class="mt-4 p-4 rounded-lg bg-gray-800 text-gray-100 whitespace-pre-wrap hidden"></div>
+                <div id="ai-result" class="mt-5 p-5 rounded-[1.5rem] bg-[#081023] text-gray-100 whitespace-pre-wrap hidden"></div>
             </div>
         </section>
 
-        <!-- Pricing Section -->
         <section class="mb-16">
-            <h2 class="text-3xl font-bold text-center mb-12">Simple Pricing</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-                <div class="glass-card p-8 rounded-xl border border-gray-700 hover:border-primary/50 transition-colors">
-                    <h3 class="text-2xl font-semibold mb-2">Free</h3>
-                    <p class="text-gray-300 mb-6">Basic features to get started</p>
-                    <div class="flex items-baseline mb-6">
-                        <span class="text-4xl font-bold">₹0</span>
-                        <span class="text-gray-400">/forever</span>
+            <div class="section-heading text-center">
+                <span class="section-tag">Subscription</span>
+                <h2>Flexible plans for every classroom.</h2>
+            </div>
+            <div class="pricing-grid">
+                <article class="glass-card p-8 rounded-[2rem] border border-white/10 hover:border-primary/40 transition-all">
+                    <h3>Free</h3>
+                    <p class="text-gray-400">Basic features to begin your AI exam workflow.</p>
+                    <div class="price-block">
+                        <span>₹0</span>
+                        <small>/ forever</small>
                     </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center">
-                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
-                            <span>5 MCQs per day</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
-                            <span>Basic question types</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="x" class="w-4 h-4 mr-2 text-gray-500"></i>
-                            <span class="text-gray-400">No PDF downloads</span>
-                        </li>
+                    <ul class="feature-list">
+                        <li>5 MCQs per day</li>
+                        <li>Basic question types</li>
+                        <li class="muted">No PDF downloads</li>
                     </ul>
-                    <a href="register.html" class="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-lg font-medium transition-colors">Get Started</a>
-                </div>
-                <div class="glass-card p-8 rounded-xl border-2 border-primary/50 relative hover:shadow-lg hover:shadow-primary/20 transition-all">
-                    <div class="absolute top-0 right-0 bg-primary text-dark px-3 py-1 rounded-bl-lg rounded-tr-lg text-sm font-bold">Popular</div>
-                    <h3 class="text-2xl font-semibold mb-2">Premium</h3>
-                    <p class="text-gray-300 mb-6">Unlock all features</p>
-                    <div class="flex items-baseline mb-6">
-                        <span class="text-4xl font-bold">₹99</span>
-                        <span class="text-gray-400">/lifetime</span>
+                    <a href="register.html" class="cta-link w-full text-center py-3 rounded-xl mt-6 inline-block">Get Started</a>
+                </article>
+                <article class="glass-card p-8 rounded-[2rem] border-2 border-primary/40 relative hover:shadow-[0_30px_60px_rgba(139,92,246,0.18)] transition-all">
+                    <div class="pill">Popular</div>
+                    <h3>Premium</h3>
+                    <p class="text-gray-400">Full access to AI driven exam creation and PDF exports.</p>
+                    <div class="price-block">
+                        <span>₹99</span>
+                        <small>/ lifetime</small>
                     </div>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center">
-                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
-                            <span>Unlimited MCQs</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
-                            <span>Advanced question types</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="check" class="w-4 h-4 mr-2 text-primary"></i>
-                            <span>PDF downloads</span>
-                        </li>
+                    <ul class="feature-list">
+                        <li>Unlimited MCQs</li>
+                        <li>Advanced question types</li>
+                        <li>PDF downloads</li>
                     </ul>
-                    <button id="buy-premium" data-amount="99" class="block w-full text-center bg-primary hover:bg-primary/90 text-dark py-3 rounded-lg font-medium transition-colors">Upgrade Now</button>
-                    <div id="payment-status" class="text-sm text-gray-400 mt-2 text-center"></div>
-                </div>
+                    <button id="buy-premium" data-amount="99" class="btn-primary w-full mt-6">Upgrade Now</button>
+                    <div id="payment-status" class="text-sm text-gray-400 mt-3 text-center"></div>
+                </article>
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="glass-card p-8 rounded-xl text-center mb-16">
-            <h2 class="text-2xl font-bold mb-4">Ready to revolutionize your exam creation?</h2>
-            <p class="text-gray-300 mb-6 max-w-2xl mx-auto">Join thousands of educators who save hours every week with SmartExamToolkit.</p>
-            <a href="register.html" class="inline-block bg-primary hover:bg-primary/90 text-dark px-8 py-3 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-primary/30">Start Free Trial</a>
+        <section class="glass-card p-10 rounded-[2rem] cta-panel text-center">
+            <h2>Ready to reinvent exam preparation?</h2>
+            <p class="section-subtitle">Bring your teaching materials into a premium AI workflow with SmartExamToolkit.</p>
+            <a href="register.html" class="btn-primary mt-6 inline-flex">Start Free Trial</a>
         </section>
     </main>
 
-    <custom-footer></custom-footer>
+    <custom-footer>
+        
+    </custom-footer>
     
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="./static/js/components/navbar.js"></script>

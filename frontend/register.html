@@ -4,72 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - SmartExamToolkit</title>
+    <meta name="description" content="Register for SmartExamToolkit, the intelligent AI exam preparation platform.">
+    <meta name="keywords" content="AI exam tool, online exam generator, notes generator, PDF generation, SmartExamToolkit">
+    <meta name="author" content="AshX Labs">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://smartexamtoolkit.in/register.html">
     <link rel="icon" type="image/svg+xml" href="./static/favicon.svg">
+    <meta property="og:title" content="Register - SmartExamToolkit" />
+    <meta property="og:description" content="Register for SmartExamToolkit, the intelligent AI exam preparation platform." />
+    <meta property="og:image" content="https://smartexamtoolkit.in/img/logo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://smartexamtoolkit.in/register.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Register - SmartExamToolkit" />
+    <meta name="twitter:description" content="Register for SmartExamToolkit, the intelligent AI exam preparation platform." />
+    <meta name="twitter:image" content="https://smartexamtoolkit.in/img/logo.png" />
+    <link rel="stylesheet" href="./static/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <link rel="stylesheet" href="./static/css/style.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        primary: '#38bdf8',
-                        secondary: '#818cf8',
+                        primary: '#8b5cf6',
+                        secondary: '#60a5fa',
                         dark: '#020617'
                     }
                 }
             }
         }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Register - SmartExamToolkit",
+      "description": "Register for SmartExamToolkit, the intelligent AI exam preparation platform.",
+      "url": "https://smartexamtoolkit.in/register.html"
+    }
+    </script>
 </head>
 <body class="bg-dark text-gray-100 min-h-screen">
     <custom-navbar>
-        <nav id="fallback-nav" aria-hidden="false" style="display:flex;gap:1rem;padding:0.75rem 1rem;background:rgba(2,6,23,0.95);color:#fff;border-bottom:1px solid rgba(255,255,255,0.04);">
-            <a href="index.html">Home</a>
-            <a href="login.html">Login</a>
-            <a href="register.html" class="bg-primary text-dark px-3 py-1 rounded">Sign Up</a>
+        <nav id="fallback-nav" aria-hidden="false" class="fallback-nav">
+            <a href="index.html" class="nav-logo">SmartExamToolkit</a>
+            <div class="fallback-links">
+                <a href="index.html">Home</a>
+                <a href="login.html">Login</a>
+                <a href="register.html" class="cta-link">Sign Up</a>
+            </div>
         </nav>
     </custom-navbar>
-    <main class="container mx-auto px-4 py-12 flex items-center justify-center">
-        <div class="glass-card p-8 rounded-xl w-full max-w-md">
+    <main class="container mx-auto px-4 py-12 flex items-center justify-center min-h-[calc(100vh-160px)]">
+        <div class="glass-card auth-panel p-10 rounded-[2rem] w-full max-w-md border border-white/10">
             <div class="text-center mb-8">
-                <h1 class="text-2xl font-bold mb-2">Create your account</h1>
-                <p class="text-gray-300">Get started with SmartExamToolkit</p>
+                <p class="eyebrow">Join AshX Labs</p>
+                <h1 class="text-3xl font-bold mb-2">Create your SmartExamToolkit account</h1>
+                <p class="text-gray-400">Start generating AI-powered exam content in minutes.</p>
             </div>
             
             <form id="register-form" method="POST" onsubmit="return validateForm(this)">
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium mb-2">Full Name</label>
-                    <input type="text" id="name" name="name" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="John Doe" required>
+                    <input type="text" id="name" name="name" class="w-full bg-[#081023] border border-white/10 rounded-[1.25rem] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="John Doe" required>
                 </div>
                 
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium mb-2">Email</label>
-                    <input type="email" id="email" name="email" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="you@example.com" required>
+                    <input type="email" id="email" name="email" class="w-full bg-[#081023] border border-white/10 rounded-[1.25rem] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="you@example.com" required>
                 </div>
                 
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-medium mb-2">Password</label>
-                    <input type="password" id="password" name="password" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="••••••••" required>
-                    <p class="text-xs text-gray-400 mt-1">Must be at least 8 characters</p>
+                    <input type="password" id="password" name="password" class="w-full bg-[#081023] border border-white/10 rounded-[1.25rem] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="••••••••" required>
+                    <p class="text-xs text-gray-500 mt-2">Must be at least 8 characters</p>
                 </div>
                 
                 <div class="mb-6">
                     <label for="confirm-password" class="block text-sm font-medium mb-2">Confirm Password</label>
-                    <input type="password" id="confirm-password" name="confirm-password" class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="••••••••" required>
+                    <input type="password" id="confirm-password" name="confirm-password" class="w-full bg-[#081023] border border-white/10 rounded-[1.25rem] px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="••••••••" required>
                 </div>
                 
-                <div class="flex items-center mb-6">
-                    <input type="checkbox" id="terms" name="terms" class="h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded" required>
-                    <label for="terms" class="ml-2 text-sm">I agree to the <a href="terms.html" class="text-primary hover:underline">Terms of Service</a> and <a href="privacy.html" class="text-primary hover:underline">Privacy Policy</a></label>
+                <div class="flex items-start gap-3 mb-6 text-sm text-gray-300">
+                    <input type="checkbox" id="terms" name="terms" class="mt-1 h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded" required>
+                    <label for="terms">I agree to the <a href="terms.html" class="text-primary hover:underline">Terms of Service</a> and <a href="privacy.html" class="text-primary hover:underline">Privacy Policy</a></label>
                 </div>
                 
-                <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-dark py-2 px-4 rounded-lg font-medium transition-colors mb-4">Create Account</button>
+                <button type="submit" class="w-full btn-primary py-3 rounded-[1.5rem] font-medium mb-4">Create Account</button>
                 
-                <div class="text-center text-sm">
-                    <span class="text-gray-400">Already have an account? </span>
-                    <a href="login.html" class="text-primary hover:underline">Login</a>
+                <div class="text-center text-sm text-gray-400">
+                    Already have an account? <a href="login.html" class="text-primary hover:underline">Login</a>
                 </div>
             </form>
         </div>
