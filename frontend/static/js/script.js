@@ -63,7 +63,7 @@ function validateForm(form) {
 const API_BASE = window.API_BASE
     || ((location.hostname === 'localhost' || location.hostname === '127.0.0.1')
         ? 'http://127.0.0.1:5000/api'
-        : '/api');
+        : 'https://smartexamtoolkit.onrender.com/api');
 
 async function generateAI(prompt) {
     try {

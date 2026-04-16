@@ -1,24 +1,74 @@
 # Deployment guide
 
-## Frontend (Netlify)
-- Publish directory: `frontend/` (select this in Netlify UI or set `publish = "frontend"` in settings).
-- No build step required (static site). If you add a build step (e.g., a bundler), set the build command and publish folder accordingly.
-- Example: drag & drop the `frontend/` folder in Netlify or connect your repo and set the publish directory to `frontend/`.
+## Frontend (Vercel)
+- Root directory: `frontend/`
+- This is a static site, so no build step is required unless you add a bundler later.
+- In Vercel UI, create a new project and set the Root Directory to `frontend`.
+- If you use the Vercel CLI:
+  ```bash
+  cd "c:\projects\smartexamtoolkit main\frontend"
+  vercel
+  vercel --prod
+  ```
 
 ## Backend (Render)
 - Create a new Web Service on Render connected to this repo.
+- Root Directory: `backend`
+- Build / Install command:
+  ```bash
+  pip install -r requirements.txt
+  ```
 - Start command: `gunicorn backend.app:app --bind 0.0.0.0:$PORT`
-- Build / Install command: `pip install -r backend/requirements.txt`
-- Make sure environment variables from `.env` are set in Render (DB uri, RAZORPAY keys, JWT secret, OPENAI keys, etc.).
+- Set Render environment variables from your `.env` file:
+  - `OPENAI_API_KEY`
+  - `RAZORPAY_KEY_ID`
+  - `RAZORPAY_KEY_SECRET`
+  - `SECRET_KEY`
+  - `RAZORPAY_WEBHOOK_SECRET` (if you use webhooks)
+- After deploy, note the Render URL, for example:
+  `https://your-backend.onrender.com`
+
+## Frontend + backend connection
+The frontend uses API calls to the backend at runtime.
+
+### Recommended Vercel setup
+1. Deploy the backend to Render.
+2. Update `frontend/static/js/script.js` so production API requests go to your Render service:
+   ```js
+   const API_BASE = window.API_BASE
+     || ((location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+         ? 'http://127.0.0.1:5000/api'
+         : 'https://your-backend.onrender.com/api');
+   ```
+3. Deploy the frontend to Vercel.
+
+### Optional Vercel rewrite
+If you prefer keeping `API_BASE = '/api'` in production, add `frontend/vercel.json`:
+```json
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://your-backend.onrender.com/api/:path*"
+    }
+  ]
+}
+```
+Then deploy the frontend to Vercel.
 
 ## Local testing
-- Frontend: serve `frontend/` with a static server (e.g., `python -m http.server 8000` inside `frontend/`).
-- Backend: from project root: `python -m backend.app` (or use `gunicorn backend.app:app`).
+- Frontend: serve `frontend/` with a static server:
+  ```bash
+  cd "c:\projects\smartexamtoolkit main\frontend"
+  python -m http.server 8000
+  ```
+- Backend: from project root:
+  ```bash
+  python -m backend.app
+  ```
 
 ---
 
-If you want, I can: 
-- Remove the old root-level frontend files (I currently left them unchanged), or
-- Add `netlify.toml` or a Render `render.yaml` with example service configs.
-
-Tell me which of these you'd like next. (I can do the removals or add config files.)
+Notes:
+- The backend currently uses SQLite, which is fine for testing but not ideal for production persistence on Render.
+- Use a separate managed database later if you need durable production storage.
